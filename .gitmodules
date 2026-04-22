@@ -1,0 +1,6 @@
+[submodule "starter.nvim"]
+	path = starter.nvim
+	url = git@github.com:sjirizarry02/starter.nvim.git
+[submodule "dotfiles-secrets"]
+	path = dotfiles-secrets
+	url = git@github.com:sjirizarry02/dotfiles-secrets.git
