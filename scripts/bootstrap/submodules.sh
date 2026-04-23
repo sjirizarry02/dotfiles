@@ -2,7 +2,7 @@
 set -e
 echo "-> Stage 3: Syncing Submodules"
 
-cd "$HOME/repos/dotfiles"
+cd "$DOTFILES_DIR"
 
 # Switches main repo to SSH
 git remote set-url origin git@github.com:sjirizarry02/dotfiles.git
