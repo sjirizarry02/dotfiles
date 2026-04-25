@@ -42,6 +42,13 @@ echo "4. Enter the password you just created."
 echo "5. Reboot again."
 
 else
-	echo "Please make sure you run 'sudo dnf update && dnf upgrade -y' and restart your system before running this script"
+	read -p "Would you like to restart this machine now [y/N]? " REBOOT_NOW
+	REBOOT_NOW_NORM="${REBOOT_NOW,,}"
+	if [[ "$REBOOT_NOW_NORM" == "y" || "$REBOOT_NOW_NORM" == "yes" ]]; then
+		echo "Shutting down machine now..."
+		reboot
+	else
+		echo "Please make sure you run 'sudo dnf update && dnf upgrade -y' and restart your system before running this script"
+	fi
 fi
 	
