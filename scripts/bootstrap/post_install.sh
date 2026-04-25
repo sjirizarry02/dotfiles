@@ -2,7 +2,12 @@
 set -e
 echo "-> Stage 5: Post-Installation Scripts"
 
-NVIM_VERSION="0.12.1"
+if [ -f "$HOME/.config/.env"]; then
+    source "$HOME/.config/.env"
+else
+    NVIM_VERSION="0.12.1"
+    TREE_SITTER_VERSION="0.22.6"
+fi
 
 # Neovim  Installation
 if ! command -v nvim >/dev/null 2>&1; then
@@ -19,5 +24,5 @@ fi
 # NPM Packages
 if command -v npm >/dev/null 2>&1; then
     echo "Installing Tree-Sitter via NPM..."
-    sudo npm install -g tree-sitter-cli@0.22.6
+    sudo npm install -g tree-sitter-cli@${TREE_SITTER_VERSION}
 fi
