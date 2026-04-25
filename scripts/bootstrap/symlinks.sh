@@ -31,12 +31,15 @@ link_file "$DOTFILES_DIR/.config/hypr" "$CONFIG_DIR/hypr"
 link_file "$DOTFILES_DIR/.config/kitty" "$CONFIG_DIR/kitty"
 link_file "$DOTFILES_DIR/.config/waybar" "$CONFIG_DIR/waybar"
 link_file "$DOTFILES_DIR/.config/pipewire" "$CONFIG_DIR/pipewire"
-link_file "$DOTFILES_DIR/dotfiles-secrets/.env" "$CONFIG_DIR/.env"
 
 # 3. Secrets
 mkdir -p "$HOME/.ssh"
 if [ -f "$DOTFILES_DIR/dotfiles-secrets/ssh/config" ]; then
     link_file "$DOTFILES_DIR/dotfiles-secrets/ssh/config" "$HOME/.ssh/config"
+fi
+
+if [ -f "$DOTFILES_DIR/dotfiles-secrets/.env" ]; then
+    link_file "$DOTFILES_DIR/dotfiles-secrets/.env" "$CONFIG_DIR/.env"
 fi
 
 # 4. Neovim Submodule
