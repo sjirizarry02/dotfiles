@@ -2,10 +2,12 @@
 set -e
 echo "-> Stage 5: Post-Installation Scripts"
 
+NVIM_VERSION="0.12.1"
+
 # Neovim  Installation
 if ! command -v nvim >/dev/null 2>&1; then
-    echo "Installing Neovim (Latest)..."
-    curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz -o /tmp/nvim-linux-x86_64.tar.gz
+    echo "Installing Neovim (v${NVIM_VERSION})..."
+    curl -L https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz -o /tmp/nvim-linux-x86_64.tar.gz
     sudo rm -rf /opt/nvim-linux-x86_64
     sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz
     sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim

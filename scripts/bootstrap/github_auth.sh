@@ -3,7 +3,7 @@ set -e
 echo "-> Stage 2: GitHub Authentication"
 
 KEY_PATH="$HOME/.ssh/id_ed25519"
-KEY_TITLE="$(hostname)-homelab-bootstrap"
+KEY_TITLE="$(hostname)-$(date +%Y%m%d)-homelab-bootstrap"
 
 if [ -f "$KEY_PATH" ]; then
     echo "SSH key already exists. Skipping generation."
