@@ -2,8 +2,8 @@
 set -e
 echo "-> Stage 5: Post-Installation Scripts"
 
-if [ -f "$HOME/.config/.env"]; then
-    source "$HOME/.config/.env"
+if [ -f "$CONFIG_DIR/.env"]; then
+    source "$CONFIG_DIR/.env"
 else
     NVIM_VERSION="0.12.1"
     TREE_SITTER_VERSION="0.22.6"
