@@ -2,7 +2,7 @@
 set -e
 echo "-> Stage 5: Post-Installation Scripts"
 
-if [ -f "$CONFIG_DIR/.env"]; then
+if [ -f "$CONFIG_DIR/.env" ]; then
     source "$CONFIG_DIR/.env"
 else
     NVIM_VERSION="0.12.1"
