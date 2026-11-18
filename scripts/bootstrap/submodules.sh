@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
-set -e
-echo "-> Stage 3: Syncing Submodules"
+set -euo pipefail
 
 cd "$DOTFILES_DIR"
+export GIT_SSH_COMMAND="${GIT_SSH_COMMAND:-$(git config --get core.sshCommand || printf ssh)}"
+GIT_SSH_COMMAND+=' -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new'
+export GIT_TERMINAL_PROMPT=0
+printf 'Syncing recorded revisions for %s...\n' "$*"
+git -c url.git@github.com:.insteadOf=https://github.com/ \
+    -c url.git@gitlab.com:.insteadOf=https://gitlab.com/ \
+    submodule update --init --recursive -- "$@"
 
-# Switches main repo to SSH
-git remote set-url origin git@github.com:sjirizarry02/dotfiles.git
-
-# Initialize and update submodules
-GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git submodule update --init --recursive
-
-# Secure the vault files now that they have been downloaded
-echo "Securing permissions on secrets vault..."
-if [ -d "$DOTFILES_DIR/dotfiles-secrets/ssh" ]; then
-    # Secure the SSH config file
-    chmod 600 "$DOTFILES_DIR/dotfiles-secrets/ssh/config" 2>/dev/null || true
-    find "$DOTFILES_DIR/dotfiles-secrets/ssh" -type f ! -name "*.pub" ! -name "config" -exec chmod 600 {} \; 2>/dev/null || true
-fi
+for module in "$@"; do
+    if [[ $module == dotfiles-secrets && -d $DOTFILES_DIR/dotfiles-secrets/ssh ]]; then
+        find "$DOTFILES_DIR/dotfiles-secrets/ssh" -type f ! -name '*.pub' -exec chmod 600 -- {} +
+        if [[ -f $DOTFILES_DIR/dotfiles-secrets/.env ]]; then
+            chmod 600 -- "$DOTFILES_DIR/dotfiles-secrets/.env"
+        fi
+    fi
+done
